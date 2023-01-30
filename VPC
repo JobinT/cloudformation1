@@ -1,5 +1,5 @@
 ---
-AwsTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: 'Amazon  Sample VPC - Private and Public subnets'
 
 Parameters:
@@ -38,19 +38,19 @@ Resources:
    CidrBlock: !Ref VpcCIDR
    EnableDnsSupport: True
    EnableDnsHostnames: True
-   Tag:
-    - Key : Name
+   Tags:
+    - Key: Name
       Value: !Ref EnvironmentName
 
  InternetGateway:
   Type: AWS::EC2::InternetGateway
   Properties:
    Tags:
-    - key: Name
+    - Key: Name
       Value: !Ref EnvironmentName
 
  InternetGatewayAttachment:
-  Type: AWS::EC2::VpcGatewayAttachment
+  Type: AWS::EC2::VPCGatewayAttachment
   Properties:
    InternetGatewayId: !Ref InternetGateway
    VpcId: !Ref VPC
@@ -94,7 +94,7 @@ Resources:
      CidrBlock: !Ref PrivateSubnet2CIDR
      MapPublicIpOnLaunch: false
      Tags:
-       - key: Name
+       - Key: Name
          Value: !Sub ${EnvironmentName} Private Subnet(AZ2)
 
 
@@ -161,7 +161,7 @@ Resources:
      RouteTableId: !Ref PrivateRouteTable1
      SubnetId: !Ref PrivateSubnet1
  PrivateRouteTable2:
-   Type: AWS:EC2::RouteTable
+   Type: AWS::EC2::RouteTable
    Properties:
      VpcId: !Ref VPC
      Tags:
@@ -190,8 +190,8 @@ Outputs:
     Value: !Ref VPC
   PublicSubnets:
     Description: A list of the public subnets
-    Value: !Join [ "," [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]
+    Value: !Join [ ",", [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]
 
   PrivateSubnets:
     Description: A list of Private Subnets
-    Value: !Join ["," [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]
+    Value: !Join [ ",", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]

@@ -1,0 +1,31 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: 'AWS ec2 creation template'
+
+Parameters:
+  ImageId:
+    Type: String
+    Description: 'Amazon Linux 2 ami'
+    Default: ''
+  VpcId:
+    Type: String
+    Description: Vpc id
+    Default:
+  SubnetId:
+    Type: String
+    Description: Subnet Id
+    Default:
+  AvailabilityZone:
+    Type: String
+    Description: AZ
+    Default:
+  InstanceType:
+    Type: String
+    Description: Ec2 instance type
+    Default: t2micro
+  KeyName:
+    Description: SSH ley pair
+    Type: AWS::EC2::KeyPair::KeyName
+Resources:
+  DemoInstance:
+    Type: AWS::EC2::Instance
