@@ -54,9 +54,26 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: '4.16.93.68/32'
+        - IpProtocol: tcp
+          FromPort: 445
+          ToPort: 445
+          CidrIp: '0.0.0.0/0'
       Tags:
       - Key: Name
         Value: SG-SSH
+  NewVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      Size: 100
+      AvailabilityZone: !GetAtt DemoInstance.AvailabilityZone
+  MountPoint:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      InstanceId: !Ref DemoInstance
+      VolumeId: !Ref NewVolume
+      Device: /dev/sdh
+
+
 
 
 
