@@ -1,0 +1,60 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS RDS creation template"
+Parameters:
+  VPC:
+   Type: String
+   Description: The VPC to create DB cluster
+   Default:
+  PrivateSubnet01:
+   Type: String
+   Description: Subnet
+   Default:
+  PrivateSubnet02:
+   Type: String
+   Description: Subnet2
+   Default:
+  MasterUserName:
+    Type: String
+    Description: The username for DB
+  MasterUserPassword:
+    Type: String
+    Description: db password
+    'NoEcho': True
+  ParameterGroup:
+    Type: String
+    Description: Name of DB parameter group
+Resources:
+  EC2SecurityGroup:
+    Type: AWS::EC2::Security Group
+    Properties:
+      GroupDescription: Database instance security group
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol : tcp
+          CidrIp: '0.0.0.0/0'
+          FromPort: 3306
+          ToPort: 3306
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          CidrIp: '0.0.0.0/0'
+  RDSDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for mysqldb
+      DBSubnetGroupName: !Sub "${AWS::Region}-aws-dxl-database-subnet-group"
+      SubnetIds:
+        - !Ref PrivateSubnet01
+        - !Ref PrivateSubnet02
+      Tags:
+        - Key : Name
+          Value: Test-RDS-db
+        - Key: Createdby
+          Value: jobin
+  RDSDBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+
+
+
+
