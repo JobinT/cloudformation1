@@ -54,6 +54,55 @@ Resources:
   RDSDBInstance:
     Type: AWS::RDS::DBInstance
     Properties:
+      DBInstanceIdentifier: aws-jobin-db1
+      AllocatedStorage: 100
+      DBInstanceClass: db.t2.micro
+      Engine: 'MYSQL'
+      MasterUserName: !Ref MasterUserName
+      MasterUserPassword: !Ref MasterUserPassword
+      BackupRetentionPeriod: 0
+      MultiAZ: False
+      EngineVersion: 8.0.20
+      AutoMinorVersionUpgrade: True
+      Iops: 1000
+      PubliclyAccessible: false
+      StorageType: io1
+      Port: 3306
+      StorageEncrypted: True
+      CopyTagsToSnapshot: True
+      MonitoringInterval: 60
+      EnableIAMDatabaseAuthentication: false
+      EnablePerformanceInsights: True
+      PerformanceInsightRetentionPeriod: 7
+      DeletionProtection: False
+      DBSubnetGroupName: !Ref RDSDBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref EC2SecurityGroup
+      MaxAllocatedStorage: 1000
+      DBParameterGroupName: !Ref ParameterGroup
+      MonitoringRoleArn: !Sub "arn:aws:iam::${AWS::AccountId}:role/rds-monitoring-role"
+      Tags:
+        - Key: Name
+          Value: aws-jobin-db1
+        - Key: Createdby
+          Value: jobin
+        - Key: Project
+          Value: Test-project
+        - Key: Environment
+          Value: Test
+Outputs:
+  Cluster:
+    Description: The DB clustername
+    Value: !Ref RDSDBInstance
+
+
+
+
+
+
+
+
+
 
 
 
